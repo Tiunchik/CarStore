@@ -21,8 +21,8 @@ import java.util.List;
  * Class FirstHiberStart - file to start and check simple operations with hibernate library
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
- * @version 0.1
- * @since 04.04.2020
+ * @version 0.2
+ * @since 05.04.2020
  */
 public class FirstHiberStart {
 
@@ -37,97 +37,103 @@ public class FirstHiberStart {
      *
      * @throws Exception
      */
-    protected SessionFactory setUp() throws Exception {
-        // A SessionFactory is set up once for an application!
+    private static SessionFactory getFactory() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
+                .configure()
                 .build();
         try {
             return new MetadataSources(registry).buildMetadata().buildSessionFactory();
         } catch (Exception e) {
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
+            LOG.error("Make factory error", e);
             StandardServiceRegistryBuilder.destroy(registry);
         }
         return null;
     }
 
-    public static void main(String[] args) throws Exception {
+    private static SessionFactory sesfactory = getFactory();
+
+    public void create() {
         User user = new User(1);
         user.setName("Max");
         Timestamp now = new Timestamp(System.currentTimeMillis());
         user.setExpired(now);
-
-        //initialization hibernate factory
-        SessionFactory sesfactory = new FirstHiberStart().setUp();
-
         //create session t work with hibernaty
-        Session session = sesfactory.openSession();
+        try (Session session = sesfactory.openSession()) {
 
-        //begin transaction, begin looks like referense to pscal, imho
-        session.beginTransaction();
+            //begin transaction, begin looks like referense to pscal, imho
+            session.beginTransaction();
+            session.save(user);
+            //make commit of transaction, if we use get or query method, we don't have to do transaction actions
+            session.getTransaction().commit();
 
-        session.save(user);
-
-        //make coomit of transaction
-        session.getTransaction().commit();
-
-        User temp = (User) session.get(User.class, 1);
-
-        if (temp != null) {
-            System.out.println(String.format("User has been found, user name is %s", temp.getName()));
-        } else {
-            System.out.println("User dosn't exist");
+            User temp = (User) session.get(User.class, 1);
+            if (temp != null) {
+                System.out.println(String.format("User has been found, user name is %s", temp.getName()));
+            } else {
+                System.out.println("User dosn't exist");
+            }
         }
+    }
 
-        session.beginTransaction();
 
-        user.setName("Semen");
+    public void update() {
+        User user = new User(1);
 
-        session.update(user);
+        try (Session session = sesfactory.openSession()) {
+            user.setName("Semen");
 
-        session.getTransaction().commit();
+            session.beginTransaction();
+            session.update(user);
+            session.getTransaction().commit();
 
-        temp = (User) session.get(User.class, 1);
-
-        if (temp != null && temp.getName().equalsIgnoreCase("Semen")) {
-            System.out.println(String.format("User has been changed, user name is %s", temp.getName()));
-        } else {
-            System.out.println("User dosn't exist");
+            User temp = (User) session.get(User.class, 1);
+            if (temp != null && temp.getName().equalsIgnoreCase("Semen")) {
+                System.out.println(String.format("User has been changed, user name is %s", temp.getName()));
+            } else {
+                System.out.println("User dosn't exist");
+            }
         }
+    }
 
-        session.beginTransaction();
+    public void delete() {
+        User user = new User(1);
+        try (Session session = sesfactory.openSession()) {
 
-        session.delete(user);
+            session.beginTransaction();
+            session.delete(user);
+            session.getTransaction().commit();
 
-        session.getTransaction().commit();
-
-        temp = (User) session.get(User.class, 1);
-
-        if (temp == null) {
-            System.out.println("User has been succesfully deleted");
-        } else {
-            System.out.println("User exists");
+            User temp = (User) session.get(User.class, 1);
+            if (temp == null) {
+                System.out.println("User has been succesfully deleted");
+            } else {
+                System.out.println("User exists");
+            }
         }
+    }
 
-        session.beginTransaction();
+    public void search() {
+        try (Session session = sesfactory.openSession()) {
 
-        session.save(new User(1));
-        session.save(new User(1));
-        session.save(new User(1));
+            session.beginTransaction();
+            session.save(new User(1));
+            session.save(new User(1));
+            session.save(new User(1));
+            session.getTransaction().commit();
 
-        session.getTransaction().commit();
+            //name of class has to be clearly matched
+            List<User> result = session.createQuery("from User").list();
+            result.forEach(e -> System.out.println(e.getId()));
 
-        session.beginTransaction();
+        }
+    }
 
-        //name of class has to be clearly matched
-        List<User> result = session.createQuery("from User").list();
-
-        result.forEach(e -> System.out.println(e.getId()));
-
-        session.getTransaction().commit();
-        session.close();
-
+    public static void main(String[] args) throws Exception {
+        FirstHiberStart start = new FirstHiberStart();
+        start.create();
+        start.update();
+        start.delete();
+        start.search();
 
     }
 }
