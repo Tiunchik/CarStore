@@ -29,14 +29,11 @@
         <property name="cache.provider_class">org.hibernate.cache.internal.DefaultCacheKeysFactory</property>
 
         <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">false</property>
+        <property name="show_sql">true</property>
 
-        <!-- Drop and re-create the database schema on startup
-        <property name="hbm2ddl.auto">create</property>-->
+        <!-- Drop and re-create the database schema on startup-->
+        <property name="hbm2ddl.auto">create</property>
 
-        <!-- Path to *.hbm.xml file to each class -->
-        <mapping resource="ru.hiber.model/User.hbm.xml"/>
-        <mapping resource="ru.hiber.model/Item.hbm.xml"/>
 
     </session-factory>
 
