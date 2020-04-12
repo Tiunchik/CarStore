@@ -8,7 +8,7 @@ $(document).ready(function () {
     }).done(function (data) {
         var company = $('#company');
         company.empty();
-        $(data).each(function (index,el) {
+        $(data).each(function (index, el) {
             company.append(" <option> " + el.name + " </option>");
         })
     })
@@ -24,7 +24,7 @@ function models() {
     }).done(function (data) {
         var models = $('#model');
         models.empty();
-        $(data).each(function (index,el) {
+        $(data).each(function (index, el) {
             models.append(" <option> " + el + " </option>");
         })
     })
@@ -89,6 +89,6 @@ function getContextPath() {
     return location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
 }
 
-function toGitHub(){
-    location.href;
+function toGitHub() {
+    location.href = "https://github.com/Tiunchik/job4j_todo/tree/autoADbranch";
 }
