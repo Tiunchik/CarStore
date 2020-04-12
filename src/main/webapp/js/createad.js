@@ -89,6 +89,4 @@ function getContextPath() {
     return location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
 }
 
-function toGitHub() {
-    location.href = "https://github.com/Tiunchik/job4j_todo/tree/autoADbranch";
-}
+

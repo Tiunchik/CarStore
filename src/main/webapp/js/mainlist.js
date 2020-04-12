@@ -168,3 +168,7 @@ function logout() {
         logoutForm();
     });
 }
+
+function toGitHub() {
+    location.href = "https://github.com/Tiunchik/job4j_todo/tree/autoADbranch";
+}

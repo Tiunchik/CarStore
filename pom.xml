@@ -222,13 +222,6 @@
             <version>5.4.2.Final</version>
         </dependency>
 
-        <!-- dependencies for tomcat deploying -->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-catalina</artifactId>
-            <version>9.0.34</version>
-        </dependency>
-
     </dependencies>
     <build>
         <plugins>
@@ -296,7 +289,7 @@
                                 <artifactItem>
                                     <groupId>com.heroku</groupId>
                                     <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.30.0</version>
+                                    <version>9.0.34</version>
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
