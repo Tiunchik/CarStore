@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js/carpage.js"></script>
+    <title>Ad car page</title>
+    <style>
+        .col-sm-4 {
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <form>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="back()">Back
+                        to adverts list
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <form>
+                <div class="btn-group" id="outbutton">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <br>
+            <input type="hidden" id="adid" value="">
+            <div class="row" id="vin"></div>
+            <br>
+            <div class="row" id="company"></div>
+            <br>
+            <div class="row" id="model"></div>
+            <br>
+            <div class="row" id="made"></div>
+            <br>
+            <div class="row" id="body"></div>
+            <br>
+            <div class="row" id="horse"></div>
+            <br>
+            <div class="row" id="type"></div>
+            <br>
+            <div class="row" id="transmition"></div>
+            <br>
+            <div class="row" id="drivetype"></div>
+            <br>
+            <div class="row" id="odometer"></div>
+            <br>
+            <div class="row" id="price"></div>
+            <br>
+            <div class="row" id="status"></div>
+            <br>
+            <div class="row" id="usercomment"></div>
+        </div>
+        <div class="col-sm-6">
+            <img src="/images?path=temp" id="mainimage" alt="none image" width="600" height="600">
+        </div>
+    </div>
+
+    <div class="row" id="setsell">
+
+    </div>
+</div>
+</body>
+</html>

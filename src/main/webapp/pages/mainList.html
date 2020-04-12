@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .mycontainer:hover {
+            color: #00008b;
+            border-radius: 25px;
+            border: 3px solid #00008b;
+            font-size: large;
+            width: 1170px
+        }
+
+        .mycontainer {
+            font-size: large;
+            border-radius: 25px;
+            border: 1px solid black;
+            width: 1170px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 768px) {
+            .mycontainer {
+                width: 750px
+            }
+        }
+
+        @media (min-width: 992px) {
+            .mycontainer {
+                width: 970px
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .mycontainer {
+                width: 1170px
+            }
+        }
+    </style>
+    <script src="js\mainlist.js"></script>
+</head>
+<body>
+<div class="allClassesContainer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <form id="touserpage">
+
+                </form>
+            </div>
+            <div class="col-sm-3">
+                <form id="loginform">
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="autocontainer" id="mainblock">
+
+    </div>
+    <div class="container">
+        <button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-book" onclick="toGitHub()"></span> Ugly Code
+        </button>
+    </div>
+</div>
+</body>
+</html>

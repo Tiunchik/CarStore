@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register new user</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js\register.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="col-sm-9">
+        <div class="form-group">
+            <h2>Please fill in your personal information</h2>
+            <label for="login">Login:</label>
+            <input type="text" class="form-control" id="login" required>
+
+            <label for="pass">Password:</label>
+            <input type="password" class="form-control" id="pass" required>
+
+            <label for="checkPass">Repeat password:</label>
+            <input type="password" class="form-control" id="checkPass" required>
+
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" required>
+
+            <label for="firstname">First name:</label>
+            <input type="text" class="form-control" id="firstname" required>
+
+            <label for="secondname">Second name:</label>
+            <input type="text" class="form-control" id="secondname">
+
+            <label for="phone">Phone namber:</label>
+            <input type="tel" class="form-control" id="phone" required>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" id="checkbox">Agree to provide personal information for
+                        processing</label>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-primary" onclick="register()">Register user</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

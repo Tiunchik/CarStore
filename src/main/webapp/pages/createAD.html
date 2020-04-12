@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create AD</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js\createad.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="col-sm-9">
+        <div class="form-group">
+            <h2>Please fill in information about car</h2>
+            <label for="vin">Vin number:</label>
+            <input type="text" class="form-control" id="vin" required>
+
+            <label for="company">Company:</label>
+            <select class="form-control" id="company" onchange="models()" required>
+            </select>
+
+            <label for="model">Model:</label>
+            <select class="form-control" id="model" required>
+            </select>
+
+            <label for="engineType">Engine type:</label>
+            <select class="form-control" id="engineType" required>
+                <option>Petrol</option>
+                <option>Diesel</option>
+            </select>
+
+            <label for="horse">Horse powers:</label>
+            <input type="number" class="form-control" id="horse" required>
+
+            <label for="made">Made:</label>
+            <input type="date" class="form-control" id="made" required>
+
+            <label for="transmition">Transmition type:</label>
+            <select class="form-control" id="transmition" required>
+                <option>Manual</option>
+                <option>Automatic</option>
+                <option>CVT</option>
+            </select>
+
+            <label for="body">Car body type:</label>
+            <select class="form-control" id="body" required>
+                <option>City car</option>
+                <option>Superminy</option>
+                <option>Hatchback</option>
+                <option>Mini-MPV</option>
+                <option>MPV</option>
+                <option>Saloon</option>
+                <option>Estate</option>
+                <option>Four-door Coupe</option>
+                <option>Crossover</option>
+                <option>SUV</option>
+                <option>SUV-Coupe</option>
+                <option>4x4/off-roaders</option>
+                <option>Coupe</option>
+                <option>Cabriolet/convertible</option>
+                <option>Roadster</option>
+                <option>Grand Tourer</option>
+            </select>
+
+            <label for="driverTpe">Drive type:</label>
+            <select class="form-control" id="driverTpe">
+                <option>Front drive</option>
+                <option>Rear drive</option>
+                <option>AWD</option>
+            </select>
+
+            <label for="Odometer">Odometer:</label>
+            <input type="number" class="form-control" id="Odometer" required>
+
+            <label for="photo">Photo:</label>
+            <input type="hidden" id="hidden" value="none">
+            <input type="file" class="form-control" id="Photo" onchange="prepareImage()" required>
+
+            <label for="Price">Price:</label>
+            <input type="number" class="form-control" id="Price" required>
+
+            <label for="comment">Owner comments:</label>
+            <textarea class="form-control" rows="3" id="comment"></textarea>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-1">
+                <br>
+                <button type="button" class="btn btn-primary" onclick="createAd()">Create advert</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
