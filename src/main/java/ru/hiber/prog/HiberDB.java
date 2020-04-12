@@ -18,7 +18,9 @@ import ru.hiber.model.*;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -42,11 +44,27 @@ public enum HiberDB {
     private static final SessionFactory FACTORY = createFactory();
 
     private static SessionFactory createFactory() {
+        Map<String,String> jdbcUrlSettings = new HashMap<>();
+        String jdbcDbUrl = System.getenv("JDBC_DATABASE_URL");
+        if (null != jdbcDbUrl) {
+            jdbcUrlSettings.put("hibernate.connection.driver_class", System.getenv("org.postgresql.Driver"));
+            jdbcUrlSettings.put("hibernate.connection.url", System.getenv("ec2-184-72-236-57.compute-1.amazonaws.com"));
+            jdbcUrlSettings.put("hibernate.connection.username", System.getenv("zzbhjbbdhvxpak"));
+            jdbcUrlSettings.put("hibernate.connection.password", System.getenv("de36d96126266df0ee00a98e7329a5a400e6a424235f9ac12677895b1e5cb003"));
+            jdbcUrlSettings.put("hibernate.dialect", System.getenv("org.hibernate.dialect.PostgreSQL95Dialect"));
+            jdbcUrlSettings.put("hibernate.connection.hbm2ddl.auto", System.getenv("create"));
+        }
+
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().
+                configure("hibernate.cfg.xml").
+                applySettings(jdbcUrlSettings).
+                build();
+
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
 
-        Metadata metadata = new MetadataSources(standardRegistry)
+        Metadata metadata = new MetadataSources(registry)
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Comment.class)
                 .addAnnotatedClass(Advertisement.class)
