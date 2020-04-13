@@ -18,15 +18,13 @@ import ru.hiber.model.*;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Class HiberDB -
+ * Class HiberDB - class for work with hibernate api
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1
@@ -35,14 +33,31 @@ import java.util.stream.Collectors;
 public enum HiberDB {
     HIBER_DB;
 
+    /**
+     * inner logger
+     */
     private static final Logger LOG = LogManager.getLogger(HiberDB.class.getName());
 
-    private static final String RIGHTS_ERROR_MESSAGE = "Right select errors";
+    /**
+     * error message for saving operations
+     */
+    private static final String LOAD_ERRORS = "Error to save into DB";
 
+    /**
+     * info message for query requests to DB
+     */
     private static final String NO_ENTITY_FOUND_FOR_QUERY = "No entity found for query";
 
+    /**
+     * Hibernate Session Factory
+     */
     private static final SessionFactory FACTORY = createFactory();
 
+    /**
+     * Create session factory during programm uploading
+     *
+     * @return SessionFactory
+     */
     private static SessionFactory createFactory() {
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
                 .configure("herokuhibernate.cfg.xml")
@@ -63,15 +78,29 @@ public enum HiberDB {
                 .build();
     }
 
-
+    /**
+     * return Enum HIBER_DB
+     *
+     * @return Enum HIBER_DB
+     */
     public static HiberDB getBD() {
         return HIBER_DB;
     }
 
+    /**
+     * return created SessionFactory
+     *
+     * @return SessionFactory
+     */
     public SessionFactory getFactory() {
         return FACTORY;
     }
 
+    /**
+     * method for functional construction another methods without receiving information
+     *
+     * @param action  Session method
+     */
     public void baseAction(Consumer<Session> action) {
         Transaction tran = null;
         try (Session session = HIBER_DB.getFactory().openSession()) {
@@ -83,10 +112,15 @@ public enum HiberDB {
             if (tran != null) {
                 tran.rollback();
             }
-            LOG.error(RIGHTS_ERROR_MESSAGE, e);
+            LOG.error(LOAD_ERRORS, e);
         }
     }
 
+    /**
+     * method for functional construction another methods with receiving information
+     *
+     * @param action Session method and type of returning value
+     */
     public <E> E baseQuaery(Function<Session, E> action) {
         E answer = null;
         try (Session session = HIBER_DB.getFactory().openSession()) {

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Class AccessFilter -
+ * Class AccessFilter - filter don't give access to pages that require to be logged user if you are not one
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

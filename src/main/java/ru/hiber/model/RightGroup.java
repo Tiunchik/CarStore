@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class RightGroup -
+ * Class RightGroup - model class for user rights, isn't used at this moment during programm execution
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

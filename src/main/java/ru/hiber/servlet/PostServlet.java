@@ -31,7 +31,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Class PostServlet -
+ * Class PostServlet - provides actions for work with DB via POST methods
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1
@@ -39,30 +39,70 @@ import java.util.List;
  */
 @WebServlet(urlPatterns = {"/post"})
 public class PostServlet extends HttpServlet {
+
+    /**
+     * inner logger
+     */
     private static final Logger LOG = LogManager.getLogger(PostServlet.class.getName());
 
+    /**
+     * link to logic class
+     */
     private static final Logic LOGIC = Logic.getLogic();
 
+    /**
+     * error message for json parsing
+     */
     private static final String ERROR = "Parse execption in post servlet";
 
+    /**
+     * json action value for create ad operation - perform creating one ad
+     */
     private static final String CREATEAD = "createad";
 
+    /**
+     * json action value for get all operation - provide full advert list
+     */
     private static final String GETALLAD = "getall";
 
+    /**
+     * json action value for get user ad operation - get information about all current user adds
+     */
     private static final String GETUSERAD = "getuserad";
 
+    /**
+     * json action value for get one add operation - get information about one add
+     */
     private static final String GETONEADD = "getoneadd";
 
+    /**
+     * json action value for get change operation - provide information is this advert of this user or now
+     */
     private static final String GETCHANGE = "getchange";
 
+    /**
+     * json action value for change status operation - changse status of advertisment (sold/none sold)
+     */
     private static final String CHANGESTATUS = "changestatus";
 
+    /**
+     * json action value for get company operation - get from DB list of companies
+     */
     private static final String GETCOMPANY = "getcompany";
 
+    /**
+     * json action value for get models operation - get form DB list of models
+     */
     private static final String GETMODELS = "getmodels";
 
+    /**
+     * name of file, that wiil be created when we download file
+     */
     private static final String TEMP_NAME = "temp";
 
+    /**
+     * folder for images
+     */
     private static String path = "/images";
 
     @Override
@@ -182,6 +222,12 @@ public class PostServlet extends HttpServlet {
         }
     }
 
+    /**
+     * get json and create Engine objct via json invormation
+     *
+     * @param jsonData json data with engine parameters
+     * @return Engine object
+     */
     private Engine createEngine(JSONObject jsonData) {
         Engine eng = new Engine();
         eng.setHoursepowers(Integer.parseInt((String) jsonData.get("horse")));
@@ -189,6 +235,12 @@ public class PostServlet extends HttpServlet {
         return eng;
     }
 
+    /**
+     * get json and create Engine objct via json invormation
+     *
+     * @param jsonData json data with Car parameters
+     * @return Car object
+     */
     private Car createCar(JSONObject jsonData) {
         Car car = new Car();
         car.setVin((String) jsonData.get("vin"));

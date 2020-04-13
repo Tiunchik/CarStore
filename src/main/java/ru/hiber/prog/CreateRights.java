@@ -23,16 +23,35 @@ import java.util.Set;
 public enum CreateRights {
     RIGHTS_CREATOR;
 
+    /**
+     * error message
+     */
     private static final String ERROR_MESSAGE = "Right insertion errors";
 
+    /**
+     * name for first group of user rights
+     */
     private static final String USER_GROUP_NAME = "USER_RIGHTS";
 
+    /**
+     * name for second group of user rights
+     */
     private static final String ADMIN_GROUP_NAME = "ADMIN_RIGHTS";
 
+    /**
+     * inner logger
+     */
     private static final Logger LOG = LogManager.getLogger(CreateRights.class.getName());
 
+    /**
+     * link to hibernate class for uploading information
+     */
     private static final HiberDB DB = HiberDB.getBD();
 
+
+    /**
+     * main method of class - take connection to HD and fill in information of right groups
+     */
     public void create() {
         Transaction tran = null;
         try (Session session = DB.getFactory().openSession()) {

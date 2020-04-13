@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Class PageServlet -
+ * Class PageServlet - Page servlet, provide access for all programm pages by URL
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1
  * @since 08.04.2020
  */
-@WebServlet(urlPatterns = {"/main", "/userpage", "/reg", "/login", "/create", "/car"})
+@WebServlet(urlPatterns = {"/main", "/userpage", "/reg", "/create", "/car"})
 public class PageServlet extends HttpServlet {
     private static final Logger LOG = LogManager.getLogger(PageServlet.class.getName());
 

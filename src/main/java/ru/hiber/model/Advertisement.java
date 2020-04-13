@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class Advertisment -
+ * Class Advertisment - data model for advertisment
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

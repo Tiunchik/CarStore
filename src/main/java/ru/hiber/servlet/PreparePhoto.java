@@ -21,7 +21,7 @@ import java.io.*;
 import java.util.List;
 
 /**
- * Class PreparePhoto -
+ * Class PreparePhoto - download images for temp folder by post method and provide images bu get method
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

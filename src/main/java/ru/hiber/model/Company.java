@@ -13,7 +13,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Class Company -
+ * Class Company - model data for Company objects,
+ * using to fill in information about companies and car types before start main programm
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

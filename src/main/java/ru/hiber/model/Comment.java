@@ -14,7 +14,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Class Comments -
+ * Class Comments - data model for comments, at this mom
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

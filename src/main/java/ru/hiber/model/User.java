@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class User -
+ * Class User - model data for users
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

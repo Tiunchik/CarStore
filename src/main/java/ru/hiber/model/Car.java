@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class Car -
+ * Class Car - data model for Car
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

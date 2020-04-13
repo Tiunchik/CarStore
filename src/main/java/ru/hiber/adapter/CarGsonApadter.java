@@ -16,7 +16,8 @@ import ru.hiber.model.Car;
 import java.lang.reflect.Type;
 
 /**
- * Class CarGsonApadter - 
+ * Class CarGsonApadter - class adapter
+ * for GsonFactory for converting Car object to Json format automaticaly by Gson method toJson
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

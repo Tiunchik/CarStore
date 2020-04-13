@@ -16,7 +16,8 @@ import ru.hiber.model.Engine;
 import java.lang.reflect.Type;
 
 /**
- * Class EngGsonAdapter -
+ * Class EngGsonAdapter - - class adapter
+ * for GsonFactory for converting Engine object to Json format automaticaly by Gson method toJson
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

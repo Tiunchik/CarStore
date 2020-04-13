@@ -15,7 +15,7 @@ import ru.hiber.model.*;
 import java.util.List;
 
 /**
- * Class Logic -
+ * Class Logic - logic class, service to servlets and work with hiberDB class
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1
@@ -23,23 +23,47 @@ import java.util.List;
  */
 public class Logic {
 
+    /**
+     * inner logger
+     */
     private static final Logger LOG = LogManager.getLogger(Logic.class.getName());
 
+    /**
+     * create example of Logic class
+     */
     private static final Logic LOGIC = new Logic();
 
+    /**
+     * link to HiberDB
+     */
     private static final HiberDB DB = HiberDB.getBD();
 
+    /**
+     * error message if uses the same vin for different cars
+     */
     private static final String SAME_CAR_ERROR = "CALL POLICE THE SAME VIN BUT DIFFERENT CARS";
 
+    /**
+     * name for first group of user rights
+     */
     private static final String USER_GROUP_NAME = "USER_RIGHTS";
 
+    /**
+     * name for second group of user rights
+     */
     private static final String ADMIN_GROUP_NAME = "ADMIN_RIGHTS";
 
+    /**
+     * private constructor, implements singleton pattern
+     */
     private Logic() {
         CreateRights.RIGHTS_CREATOR.create();
         CarBase.LOADER.prepareCarBase();
     }
 
+    /**
+     * Gson, created with factory and futher used by different servlets
+     */
     private static final Gson GSON = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(User.class, new UserGsonAdapter())
@@ -49,10 +73,20 @@ public class Logic {
             .registerTypeAdapter(Company.class, new CompanyGsonApadter())
             .create();
 
+    /**
+     * static getter for logic
+     *
+     * @return Logic
+     */
     public static Logic getLogic() {
         return LOGIC;
     }
 
+    /**
+     * static getter for Gson
+     *
+     * @return Gson
+     */
     public Gson getGson() {
         return GSON;
     }

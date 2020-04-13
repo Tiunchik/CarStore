@@ -16,7 +16,8 @@ import ru.hiber.model.Company;
 import java.lang.reflect.Type;
 
 /**
- * Class CompanyGsonApadter - 
+ * Class CompanyGsonApadter - - class adapter
+ * for GsonFactory for converting Company object to Json format automaticaly by Gson method toJson
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

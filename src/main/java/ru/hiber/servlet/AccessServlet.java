@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Class AccessServlet -
+ * Class AccessServlet - containes post method for registration, login and logout actions
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1
@@ -41,20 +41,45 @@ import java.io.PrintWriter;
  */
 @WebServlet(urlPatterns = {"/access"})
 public class AccessServlet extends HttpServlet {
+
+    /**
+     * inner logger
+     */
     private static final Logger LOG = LogManager.getLogger(AccessServlet.class.getName());
 
+    /**
+     * link to logic class
+     */
     private static final Logic LOGIC = Logic.getLogic();
 
+    /**
+     * json action value for login operation
+     */
     private static final String LOGIN = "login";
 
+    /**
+     * json action value for logout operation
+     */
     private static final String LOGOUT = "logout";
 
+    /**
+     * json action value for registration operation
+     */
     private static final String REG = "registration";
 
+    /**
+     * json action value for rights operation - isn't used during programm execution
+     */
     private static final String RIGHTS = "rights";
 
+    /**
+     * json action value for sesscion check operation operation
+     */
     private static final String SESCHECK = "sessioncheck";
 
+    /**
+     * error message for json parsing
+     */
     private static final String ERROR = "Parse execption in access servlet";
 
     @Override
@@ -94,9 +119,6 @@ public class AccessServlet extends HttpServlet {
                 } else {
                     resp.setStatus(500);
                 }
-            }
-            if (key.equalsIgnoreCase(RIGHTS)) {
-                int i;
             }
             if (key.equalsIgnoreCase(SESCHECK)) {
                 User user = (User) session.getAttribute("user");

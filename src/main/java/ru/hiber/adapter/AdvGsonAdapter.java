@@ -16,7 +16,8 @@ import ru.hiber.model.Advertisement;
 import java.lang.reflect.Type;
 
 /**
- * Class AdGsonAdapter -
+ * Class AdGsonAdapter - class adapter
+ * for GsonFactory for converting Advertisment object to Json format automaticaly by Gson method toJson
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1

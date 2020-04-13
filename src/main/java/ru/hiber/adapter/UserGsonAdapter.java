@@ -16,7 +16,8 @@ import ru.hiber.model.User;
 import java.lang.reflect.Type;
 
 /**
- * Class UserGsonAdapter - 
+ * Class UserGsonAdapter - - class adapter
+ * for GsonFactory for converting User object to Json format automaticaly by Gson method toJson
  *
  * @author Maksim Tiunchik (senebh@gmail.com)
  * @version 0.1
