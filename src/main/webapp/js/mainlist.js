@@ -43,7 +43,7 @@ function loadAdd(data) {
             "<input type=\"hidden\" value=\"" + el.id + "\" id=\"addnumber\"" +
             "            <div class=\"row\">\n" +
             "                <div class=\"col-sm-3\">\n" +
-            "                    <img src=\"http://localhost:8090/myauto/images?path=" + el.id + "\" class=\"img-rounded\" alt=\"None image\"\n" +
+            "                    <img src=\"" + getContextPath() + "/images?path=" + el.id + "\" class=\"img-rounded\" alt=\"None image\"\n" +
             "                         width=\"200px\" height=\"200px\">\n" +
             "                </div>\n" +
             "                <div class=\"col-sm-9\">\n" +
@@ -179,7 +179,7 @@ function doFilter() {
     var date = $('#findday').val();
     var status = $('#findsale').val();
     var company = $('#findcompany').val();
-    if (!photo && !date && !status && !company){
+    if (!photo && !date && !status && !company) {
         dropFilters();
     }
     $.ajax({
