@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function load(num) {
-    $('#mainimage').attr('src', "http://localhost:8090/myauto/images?path=" + num);
+    $('#mainimage').attr('src', getContextPath() + "/myauto/images?path=" + num);
     $.ajax({
         url: getContextPath() + "/post",
         method: 'POST',
@@ -37,7 +37,7 @@ function load(num) {
     })
 }
 
-function under(){
+function under() {
     alert("This function is under construction");
 }
 
