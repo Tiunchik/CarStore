@@ -16,7 +16,7 @@ $(document).ready(function () {
     }).done(function (data) {
         $(data).each(function (index, el) {
             var string = "<br>" +
-                "<div class=\"mycontainer\"'>" +
+                "<div class=\"container mycontainer\"'>" +
                 "<div class=\"container\"'>\n" +
                 "<input type=\"hidden\" value=\"" + el.id + "\" id=\"addnumber\"" +
                 "            <div class=\"row\">\n" +
@@ -60,7 +60,8 @@ $(document).ready(function () {
                 "                </div>\n" +
                 "            </div>\n" +
                 "            </div>\n" +
-                "        </div>";
+                "        </div>" +
+                "        <br>";
             $('#mainblock').append(string).off().on('click', '.container', function () {
                 var addnum = $(this).find('#addnumber').val();
                 localStorage.clear();
