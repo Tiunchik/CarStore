@@ -21,8 +21,7 @@ $(document).ready(function () {
                 "<input type=\"hidden\" value=\"" + el.id + "\" id=\"addnumber\"" +
                 "            <div class=\"row\">\n" +
                 "                <div class=\"col-sm-3\">\n" +
-                "                    <img src=\"" + getContextPath() + "/images?path=" + el.id + "\" class=\"img-rounded\" alt=\"None image\"\n" +
-                "                         width=\"200px\" height=\"200px\">\n" +
+                "                    <img src=\"" + getContextPath() + "/images?path=" + el.id + "\" class=\"img-rounded\" alt=\"None image\">\n" +
                 "                </div>\n" +
                 "                <div class=\"col-sm-9\">\n" +
                 "                    <div class=\"row\">\n" +
@@ -51,10 +50,10 @@ $(document).ready(function () {
                 "                        <dl>\n" +
                 "                            <div class=\"col-sm-2\"><strong>Odometer</strong></div>\n" +
                 "                            <div class=\"col-sm-2\">" + el.odometer + "</div>\n" +
-                "                            <div class=\"col-sm-2\"><strong>Price</strong></div>\n" +
-                "                            <div class=\"col-sm-2\">" + el.price + "</div>\n" +
-                "                            <div class=\"col-sm-2\"><strong>Status</strong></div>\n" +
-                "                            <div class=\"col-sm-2\">" + getStatus(el.status) + "</div>\n" +
+                "                            <div class=\"col-sm-2 big\"><strong>Price</strong></div>\n" +
+                "                            <div class=\"col-sm-2 big\">" + el.price + "</div>\n" +
+                "                            <div class=\"col-sm-2 big\"><strong>Status</strong></div>\n" +
+                "                            <div class=\"col-sm-2 big\">" + getStatus(el.status) + "</div>\n" +
                 "                        </dl>\n" +
                 "                    </div>\n" +
                 "                </div>\n" +
