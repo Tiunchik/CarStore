@@ -54,23 +54,26 @@ public enum CreateRights {
      */
     public void create() {
         Transaction tran = null;
-        try (Session session = DB.getFactory().openSession()) {
-            tran = session.getTransaction();
-            tran.begin();
-            RightGroup admin = new RightGroup();
-            admin.setGroupName(ADMIN_GROUP_NAME);
-            admin.setActions(Set.of("P", "C", "D", "U", "V"));
-            RightGroup user = new RightGroup();
-            user.setGroupName(USER_GROUP_NAME);
-            user.setActions(Set.of("C", "U", "V"));
-            session.persist(admin);
-            session.persist(user);
-            tran.commit();
-        } catch (Exception e) {
-            if (tran != null) {
-                tran.rollback();
+        RightGroup usersGroup = DB.gerRights(USER_GROUP_NAME);
+        if (usersGroup == null) {
+            try (Session session = DB.getFactory().openSession()) {
+                tran = session.getTransaction();
+                tran.begin();
+                RightGroup admin = new RightGroup();
+                admin.setGroupName(ADMIN_GROUP_NAME);
+                admin.setActions(Set.of("P", "C", "D", "U", "V"));
+                RightGroup user = new RightGroup();
+                user.setGroupName(USER_GROUP_NAME);
+                user.setActions(Set.of("C", "U", "V"));
+                session.persist(admin);
+                session.persist(user);
+                tran.commit();
+            } catch (Exception e) {
+                if (tran != null) {
+                    tran.rollback();
+                }
+                LOG.error(ERROR_MESSAGE, e);
             }
-            LOG.error(ERROR_MESSAGE, e);
         }
     }
 }

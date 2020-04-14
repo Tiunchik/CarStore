@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -94,6 +95,11 @@ public class PostServlet extends HttpServlet {
      * json action value for get models operation - get form DB list of models
      */
     private static final String GETMODELS = "getmodels";
+
+    /**
+     * json action value for get only filtered add operation - get form DB list of filtered add
+     */
+    private static final String FILTERADD = "filter";
 
     /**
      * name of file, that wiil be created when we download file
@@ -212,6 +218,21 @@ public class PostServlet extends HttpServlet {
                 company.setName((String) jsonData.get("company"));
                 List<String> models = LOGIC.getModels(company);
                 String out = LOGIC.getGson().toJson(models);
+                resp.setContentType("application/json");
+                writer.write(out);
+                writer.flush();
+                resp.setStatus(200);
+            }
+            if (key.equalsIgnoreCase(FILTERADD)) {
+                HashMap<String, String> keys = new HashMap<>();
+                for (var param : jsonData.keySet()) {
+                    String temp = (String) jsonData.get(param);
+                    if (temp != null && !temp.equals(FILTERADD)) {
+                        keys.put((String) param, temp);
+                    }
+                }
+                List<Advertisement> list = LOGIC.getfilteredAdd(keys);
+                String out = LOGIC.getGson().toJson(list);
                 resp.setContentType("application/json");
                 writer.write(out);
                 writer.flush();

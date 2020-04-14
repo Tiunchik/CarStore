@@ -18,6 +18,7 @@ import ru.hiber.model.*;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -60,7 +61,7 @@ public enum HiberDB {
      */
     private static SessionFactory createFactory() {
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-                .configure("herokuhibernate.cfg.xml")
+                .configure("herokuhibernate.cfg.xml") // or herokuhibernate.cfg.xml
                 .build();
 
         Metadata metadata = new MetadataSources(standardRegistry)
@@ -99,7 +100,7 @@ public enum HiberDB {
     /**
      * method for functional construction another methods without receiving information
      *
-     * @param action  Session method
+     * @param action Session method
      */
     public void baseAction(Consumer<Session> action) {
         Transaction tran = null;
@@ -158,6 +159,7 @@ public enum HiberDB {
                 .sorted()
                 .collect(Collectors.toList()));
     }
+
     public void addNewUser(User user) {
         baseAction(session -> session.persist(user));
     }
@@ -231,6 +233,21 @@ public enum HiberDB {
             query.setParameter("group", nameGroup);
             return (RightGroup) query.getSingleResult();
         });
+    }
+
+    public List<Advertisement> getfilteredAdd(HashMap<String, String> keys) {
+        StringBuilder builder = new StringBuilder("from Advertisement as adv where ");
+        keys.keySet().forEach(e -> {
+            builder.append("adv.").append(e);
+            if (e.equalsIgnoreCase("created")) {
+                builder.append(" > ");
+            } else {
+                builder.append(" = ");
+            }
+            builder.append(keys.get(e)).append(" and ");
+        });
+        String requestLine = builder.toString().substring(0, builder.toString().length() - 4);
+        return (List<Advertisement>) baseQuaery(session -> session.createQuery(requestLine).list());
     }
 
 }

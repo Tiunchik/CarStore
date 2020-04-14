@@ -9,10 +9,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONObject;
 import ru.hiber.adapter.*;
 import ru.hiber.model.*;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class Logic - logic class, service to servlets and work with hiberDB class
@@ -173,4 +179,47 @@ public class Logic {
         return DB.getModels(company);
     }
 
+    public List<Advertisement> getfilteredAdd(HashMap<String, String> keys) {
+        List<String> delete = keys.keySet().stream().filter(e -> keys.get(e).equalsIgnoreCase("")).collect(Collectors.toList());
+        delete.forEach(keys::remove);
+        for (var e : keys.keySet()) {
+            if (keys.containsKey("photo")) {
+                if (keys.get(e).equalsIgnoreCase("Has image")) {
+                    keys.put("photo", "not null");
+                } else {
+                    keys.put("photo", "null");
+                }
+            }
+            if (keys.containsKey("created")) {
+                if (keys.get(e).equalsIgnoreCase("Added from yesterday")) {
+                    Instant now = Instant.now();
+                    now = now.minus(1, ChronoUnit.DAYS);
+                    Timestamp yerstaday = Timestamp.from(now);
+                    keys.put("created", yerstaday.toString());
+                } else {
+                    Instant now = Instant.now();
+                    now = now.minus(3, ChronoUnit.DAYS);
+                    Timestamp timestamp = Timestamp.from(now);
+                    keys.put("created", timestamp.toString());
+                }
+            }
+            if (keys.containsKey("status")) {
+                if (keys.get(e).equalsIgnoreCase("Sold")) {
+                    keys.put("status", "false");
+                } else {
+                    keys.put("status", "true");
+                }
+            }
+            if (keys.containsKey("car.company")) {
+                if (e.equalsIgnoreCase("car.company")) {
+                    StringBuilder builder = new StringBuilder()
+                            .append("'")
+                            .append(keys.get(e))
+                            .append("'");
+                    keys.put(e, builder.toString());
+                }
+            }
+        }
+        return DB.getfilteredAdd(keys);
+    }
 }

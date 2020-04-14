@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -53,32 +54,35 @@ public enum CarBase {
 
     /**
      * main method of class - take connection to RESOURSE and load all information to DB base
-      */
+     */
     public void prepareCarBase() {
-        HashMap<String, Company> companyHashMap = new HashMap<>();
-        URL path = CarBase.class.getClassLoader().getResource(RESOURSE);
-        if (path != null) {
-            Path base = null;
-            try {
-                base = Paths.get(path.toURI());
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-            try (BufferedReader reader = Files.newBufferedReader(base, UTF_8)) {
-                reader.lines().forEach(e -> {
-                    String[] input = e.split("=");
-                    if (companyHashMap.containsKey(input[0])) {
-                        companyHashMap.get(input[0]).getModels().add(input[1]);
-                    } else {
-                        Company temp = new Company();
-                        temp.setName(input[0]);
-                        temp.getModels().add(input[1]);
-                        companyHashMap.put(input[0], temp);
-                    }
-                });
-                companyHashMap.values().forEach(DB::addCompany);
-            } catch (IOException e) {
-                LOG.error(ERROR_MESSAGE, e);
+        List<Company> check = DB.getCompanyList();
+        if (check.isEmpty()) {
+            HashMap<String, Company> companyHashMap = new HashMap<>();
+            URL path = CarBase.class.getClassLoader().getResource(RESOURSE);
+            if (path != null) {
+                Path base = null;
+                try {
+                    base = Paths.get(path.toURI());
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                try (BufferedReader reader = Files.newBufferedReader(base, UTF_8)) {
+                    reader.lines().forEach(e -> {
+                        String[] input = e.split("=");
+                        if (companyHashMap.containsKey(input[0])) {
+                            companyHashMap.get(input[0]).getModels().add(input[1]);
+                        } else {
+                            Company temp = new Company();
+                            temp.setName(input[0]);
+                            temp.getModels().add(input[1]);
+                            companyHashMap.put(input[0], temp);
+                        }
+                    });
+                    companyHashMap.values().forEach(DB::addCompany);
+                } catch (IOException e) {
+                    LOG.error(ERROR_MESSAGE, e);
+                }
             }
         }
     }

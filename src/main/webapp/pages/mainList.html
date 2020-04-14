@@ -62,14 +62,58 @@
                 </form>
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="findday">Time filter</label>
+                <select class="form-control" id="findday" onchange="doFilter()">
+                    <option></option>
+                    <option>Added from yesterday</option>
+                    <option>Added three day ago</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <label for="findcompany">Company filter</label>
+                <select class="form-control" id="findcompany" onchange="doFilter()">
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <label for="findphoto">Image filter</label>
+                <select class="form-control" id="findphoto" onchange="doFilter()">
+                    <option></option>
+                    <option>Has image</option>
+                    <option>Doesn't have image</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <label for="findsale">Status filter</label>
+                <select class="form-control" id="findsale" onchange="doFilter()">
+                    <option></option>
+                    <option>Sold</option>
+                    <option>Unsold</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-9">
+                <a href="https://github.com/Tiunchik/job4j_todo/tree/autoADbranch" class="btn btn-info btn-lg">
+                    <span class="glyphicon glyphicon-book"></span> Ugly code
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" onclick="dropFilters()"> Drop filters</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="autocontainer" id="mainblock">
 
     </div>
+    <br>
     <div class="container">
-            <a href="https://github.com/Tiunchik/job4j_todo/tree/autoADbranch" class="btn btn-info btn-lg">
-                <span class="glyphicon glyphicon-book"></span> Ugly code
-            </a>
+
     </div>
 </div>
 </body>
