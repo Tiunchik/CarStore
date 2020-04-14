@@ -5,7 +5,7 @@ $(document).ready(function () {
 });
 
 function load(num) {
-    $('#mainimage').attr('src', getContextPath() + "/myauto/images?path=" + num);
+    $('#mainimage').attr('src', getContextPath() + "/images?path=" + num);
     $.ajax({
         url: getContextPath() + "/post",
         method: 'POST',
