@@ -108,7 +108,7 @@ public class Logic {
     }
 
     public void inserFullAdv(Advertisement adv, Car car, Engine eng, User user) {
-        DB.inserFullAdv(adv,car,eng,user);
+        DB.inserFullAdv(adv, car, eng, user);
     }
 
     public void addNewCar(Car car) {

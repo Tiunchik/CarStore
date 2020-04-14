@@ -53,7 +53,7 @@ public class PreparePhoto extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try (OutputStream out = resp.getOutputStream()){
+        try (OutputStream out = resp.getOutputStream()) {
             String imagename = req.getParameter("path");
             Advertisement adv = new Advertisement();
             adv.setId(Long.parseLong(imagename));
@@ -63,7 +63,7 @@ public class PreparePhoto extends HttpServlet {
             resp.setHeader("Content-Disposition", "attachment; filename=\"" + imagename + "\"");
             out.write(image);
             resp.setStatus(200);
-        } catch (IOException io){
+        } catch (IOException io) {
             LOG.error(SENDING_IMAGE, io);
         }
     }
