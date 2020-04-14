@@ -4,15 +4,7 @@ $(document).ready(function () {
 });
 
 function prepareAdvList() {
-    $.ajax({
-        url: getContextPath() + "/post",
-        method: 'POST',
-        contentType: 'json',
-        data: JSON.stringify({"action": "getall"}),
-        dataType: 'json'
-    }).done(function (data) {
-        loadAdd(data);
-    });
+    loadFullAdList();
     $.ajax({
         url: getContextPath() + "/post",
         method: 'post',
@@ -29,6 +21,18 @@ function prepareAdvList() {
     })
 }
 
+function loadFullAdList() {
+    $.ajax({
+        url: getContextPath() + "/post",
+        method: 'POST',
+        contentType: 'json',
+        data: JSON.stringify({"action": "getall"}),
+        dataType: 'json'
+    }).done(function (data) {
+        loadAdd(data);
+    })
+}
+
 function loadAdd(data) {
     var mainblock = $('#mainblock');
     mainblock.empty();
@@ -39,7 +43,7 @@ function loadAdd(data) {
             "<input type=\"hidden\" value=\"" + el.id + "\" id=\"addnumber\"" +
             "            <div class=\"row\">\n" +
             "                <div class=\"col-sm-3\">\n" +
-            "                    <img src=\"http://localhost:8090/myauto/images?path=" + el.photo + "\" class=\"img-rounded\" alt=\"None image\"\n" +
+            "                    <img src=\"http://localhost:8090/myauto/images?path=" + el.id + "\" class=\"img-rounded\" alt=\"None image\"\n" +
             "                         width=\"200px\" height=\"200px\">\n" +
             "                </div>\n" +
             "                <div class=\"col-sm-9\">\n" +
@@ -72,7 +76,7 @@ function loadAdd(data) {
             "                            <div class=\"col-sm-2\"><strong>Price</strong></div>\n" +
             "                            <div class=\"col-sm-2\">" + el.price + "</div>\n" +
             "                            <div class=\"col-sm-2\"><strong>Status</strong></div>\n" +
-            "                            <div class=\"col-sm-2\">" + el.status + "</div>\n" +
+            "                            <div class=\"col-sm-2\">" + getStatus(el.status) + "</div>\n" +
             "                        </dl>\n" +
             "                    </div>\n" +
             "                </div>\n" +
@@ -86,6 +90,14 @@ function loadAdd(data) {
             location.href = getContextPath() + "/car";
         })
     })
+}
+
+function getStatus(boolean) {
+    if (boolean) {
+        return "Unsold";
+    } else {
+        return "Sold";
+    }
 }
 
 function login() {
@@ -167,6 +179,9 @@ function doFilter() {
     var date = $('#findday').val();
     var status = $('#findsale').val();
     var company = $('#findcompany').val();
+    if (!photo && !date && !status && !company){
+        dropFilters();
+    }
     $.ajax({
         url: getContextPath() + "/post",
         method: 'post',
@@ -185,11 +200,11 @@ function doFilter() {
 }
 
 function dropFilters() {
-    $('#findphoto').val();
-    $('#findday').val();
-    $('#findsale').val();
-    $('#findcompany').val();
-    doFilter();
+    $('#findphoto').val("");
+    $('#findday').val("");
+    $('#findsale').val("");
+    $('#findcompany').val("");
+    loadFullAdList();
 }
 
 function logout() {

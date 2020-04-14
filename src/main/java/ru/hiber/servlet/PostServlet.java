@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.postgresql.largeobject.BlobInputStream;
 import ru.hiber.adapter.AdvGsonAdapter;
 import ru.hiber.adapter.CarGsonApadter;
 import ru.hiber.adapter.EngGsonAdapter;
@@ -136,19 +137,10 @@ public class PostServlet extends HttpServlet {
                 Engine eng = createEngine(jsonData);
                 Car car = createCar(jsonData);
                 Advertisement adv = createAdv(jsonData);
-                LOGIC.addNewEng(eng);
-                LOGIC.addNewCar(car);
-                LOGIC.addNewAd(adv);
+                LOGIC.inserFullAdv(adv, car, eng, user);
                 if (((String) jsonData.get("photo")).equalsIgnoreCase("yes")) {
-                    adv.setPhoto(saveImage(adv));
+                    saveImage(adv);
                 }
-                car.addEngine(eng);
-                car.addAdvert(adv);
-                user.addAdv(adv);
-                LOGIC.updateEng(eng);
-                LOGIC.updateCar(car);
-                LOGIC.updateAdv(adv);
-                LOGIC.updateUser(user);
                 resp.setStatus(200);
             }
             if (key.equalsIgnoreCase(GETUSERAD) || key.equalsIgnoreCase(GETALLAD)) {
@@ -283,16 +275,18 @@ public class PostServlet extends HttpServlet {
         return adv;
     }
 
-    private String saveImage(Advertisement adv) {
+    private boolean saveImage(Advertisement adv) {
+        var answer = false;
         File load = new File(path + File.separator + TEMP_NAME);
-        File save = new File(path + File.separator + adv.getId());
-        try (FileInputStream in = new FileInputStream(load);
-             FileOutputStream out = new FileOutputStream(save)) {
-            out.write(in.readAllBytes());
-            return String.valueOf(adv.getId());
+        try (FileInputStream in = new FileInputStream(load)) {
+            byte[] temp = in.readAllBytes();
+            adv.setPhoto(temp);
+            LOGIC.updateAdv(adv);
+            answer = true;
         } catch (IOException e) {
             LOG.error("file error", e);
         }
-        return null;
+        return answer;
+
     }
 }

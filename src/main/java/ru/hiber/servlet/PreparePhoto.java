@@ -11,6 +11,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.hiber.model.Advertisement;
+import ru.hiber.prog.Logic;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,9 +32,15 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/images"})
 public class PreparePhoto extends HttpServlet {
 
+    private static final Logic LOGIC = Logic.getLogic();
+
     private static final Logger LOG = LogManager.getLogger(PreparePhoto.class.getName());
 
     private static final String TEMP_NAME = "temp";
+
+    private static final String SENDING_IMAGE = "IO exception when send image";
+
+    private static final String LOADING_IMAGE = "IO exception when load image";
 
     private static String path = "/images";
 
@@ -45,14 +53,18 @@ public class PreparePhoto extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String filePath = (String) req.getParameter("path");
-        File answer = new File(path + File.separator + filePath);
-        resp.setContentType("name=" + filePath);
-        resp.setContentType("image/png");
-        resp.setHeader("Content-Disposition", "attachment; filename=\"" + filePath + "\"");
-        try (InputStream in = new FileInputStream(answer)) {
-            resp.getOutputStream().write(in.readAllBytes());
+        try (OutputStream out = resp.getOutputStream()){
+            String imagename = req.getParameter("path");
+            Advertisement adv = new Advertisement();
+            adv.setId(Long.parseLong(imagename));
+            byte[] image = LOGIC.getImage(adv);
+            resp.setContentType("name=" + imagename);
+            resp.setContentType("image/png");
+            resp.setHeader("Content-Disposition", "attachment; filename=\"" + imagename + "\"");
+            out.write(image);
             resp.setStatus(200);
+        } catch (IOException io){
+            LOG.error(SENDING_IMAGE, io);
         }
     }
 
@@ -76,8 +88,8 @@ public class PreparePhoto extends HttpServlet {
                     }
                 }
             }
-        } catch (FileUploadException e) {
-            LOG.error("some text", e);
+        } catch (FileUploadException io) {
+            LOG.error(LOADING_IMAGE, io);
         }
     }
 }

@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
 import ru.hiber.adapter.*;
 import ru.hiber.model.*;
 
@@ -108,6 +107,10 @@ public class Logic {
         return answer;
     }
 
+    public void inserFullAdv(Advertisement adv, Car car, Engine eng, User user) {
+        DB.inserFullAdv(adv,car,eng,user);
+    }
+
     public void addNewCar(Car car) {
         Car baseCar = DB.getCar(car);
         if (baseCar == null) {
@@ -175,44 +178,50 @@ public class Logic {
     }
 
     public List<String> getModels(Company comp) {
-        Company company = DB.getCompany(comp);
+        Company company = DB.getCompanyByName(comp);
         return DB.getModels(company);
     }
 
+    /**
+     * prepare parameters for filter execution
+     *
+     * @param keys filter parameters
+     * @return List of filtred advertesment
+     */
     public List<Advertisement> getfilteredAdd(HashMap<String, String> keys) {
         List<String> delete = keys.keySet().stream().filter(e -> keys.get(e).equalsIgnoreCase("")).collect(Collectors.toList());
         delete.forEach(keys::remove);
         for (var e : keys.keySet()) {
-            if (keys.containsKey("photo")) {
+            if (e.equalsIgnoreCase("photo")) {
                 if (keys.get(e).equalsIgnoreCase("Has image")) {
-                    keys.put("photo", "not null");
+                    keys.put("photo", " != null");
                 } else {
-                    keys.put("photo", "null");
+                    keys.put("photo", " = null");
                 }
             }
-            if (keys.containsKey("created")) {
+            if (e.equalsIgnoreCase("created")) {
                 if (keys.get(e).equalsIgnoreCase("Added from yesterday")) {
                     Instant now = Instant.now();
                     now = now.minus(1, ChronoUnit.DAYS);
                     Timestamp yerstaday = Timestamp.from(now);
-                    keys.put("created", yerstaday.toString());
+                    keys.put("created", ">" + yerstaday.toString());
                 } else {
                     Instant now = Instant.now();
                     now = now.minus(3, ChronoUnit.DAYS);
                     Timestamp timestamp = Timestamp.from(now);
-                    keys.put("created", timestamp.toString());
+                    keys.put("created", ">" + timestamp.toString());
                 }
             }
-            if (keys.containsKey("status")) {
+            if (e.equalsIgnoreCase("status")) {
                 if (keys.get(e).equalsIgnoreCase("Sold")) {
-                    keys.put("status", "false");
+                    keys.put("status", "= false");
                 } else {
-                    keys.put("status", "true");
+                    keys.put("status", "= true");
                 }
             }
-            if (keys.containsKey("car.company")) {
+            if (e.equalsIgnoreCase("car.company")) {
                 if (e.equalsIgnoreCase("car.company")) {
-                    StringBuilder builder = new StringBuilder()
+                    StringBuilder builder = new StringBuilder(" = ")
                             .append("'")
                             .append(keys.get(e))
                             .append("'");
@@ -221,5 +230,9 @@ public class Logic {
             }
         }
         return DB.getfilteredAdd(keys);
+    }
+
+    public byte[] getImage(Advertisement adv) {
+        return DB.getImage(adv);
     }
 }

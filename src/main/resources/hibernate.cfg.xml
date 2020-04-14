@@ -19,20 +19,26 @@
         <property name="connection.username">postgres</property>
         <property name="connection.password">password</property>
 
-        <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">5</property>
+        <!-- c3p0 connection settings -->
+        <property name="hibernate.c3p0.acquire_increment">1</property>
+        <property name="hibernate.c3p0.min_size">1</property>
+        <property name="hibernate.c3p0.max_size">5</property>
+        <property name="hibernate.c3p0.timeout">120</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+        <property name="hibernate.c3p0.idle_test_period">60</property>
+        <property name="hibernate.c3p0.validate">true</property>
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
 
         <!-- Disable the second-level cache  -->
-        <property name="cache.provider_class">org.hibernate.cache.internal.DefaultCacheKeysFactory</property>
+<!--        <property name="cache.provider_class">org.hibernate.cache.internal.DefaultCacheKeysFactory</property>-->
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup-->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">none</property>
 
 
     </session-factory>

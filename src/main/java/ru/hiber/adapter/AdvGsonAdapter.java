@@ -37,7 +37,6 @@ public class AdvGsonAdapter implements JsonSerializer<Advertisement> {
         answer.addProperty("price", adv.getPrice());
         answer.addProperty("comment", adv.getUserComment());
         answer.addProperty("odometer", adv.getOdomenter());
-        answer.addProperty("photo", adv.getPhoto());
         return answer;
     }
 }

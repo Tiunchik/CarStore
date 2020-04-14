@@ -132,6 +132,11 @@ public enum HiberDB {
         return answer;
     }
 
+    /**
+     * add ompany to DB
+     *
+     * @param comp added company
+     */
     public void addCompany(Company comp) {
         baseAction(session -> session.persist(comp));
     }
@@ -143,7 +148,13 @@ public enum HiberDB {
         });
     }
 
-    public Company getCompany(Company comp) {
+    /**
+     * get Company object from DB by name
+     *
+     * @param comp Company with setted name
+     * @return Full company
+     */
+    public Company getCompanyByName(Company comp) {
         return baseQuaery(session -> {
             Query query = session.createQuery("FROM ru.hiber.model.Company AS a WHERE a.name= :name");
             query.setParameter("name", comp.getName());
@@ -151,6 +162,12 @@ public enum HiberDB {
         });
     }
 
+    /**
+     * get list of models from company
+     *
+     * @param comp Company
+     * @return List of models of the company
+     */
     public List<String> getModels(Company comp) {
         return baseQuaery(session -> session
                 .get(Company.class, comp.getId())
@@ -160,18 +177,40 @@ public enum HiberDB {
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * add user to DB
+     *
+     * @param user new use without Id
+     */
     public void addNewUser(User user) {
         baseAction(session -> session.persist(user));
     }
 
+    /**
+     * get user from DB by id
+     *
+     * @param user user with id
+     * @return full user
+     */
     public User getUser(User user) {
         return baseQuaery(session -> session.get(User.class, user.getId()));
     }
 
+    /**
+     * update user by id
+     *
+     * @param user full user with id
+     */
     public void updateUser(User user) {
         baseAction(session -> session.update(user));
     }
 
+    /**
+     * search user by login
+     *
+     * @param user user with login
+     * @return fullfilled user
+     */
     public User getUserByLogin(User user) {
         return (User) baseQuaery(session -> {
             Query query = session.createQuery("FROM ru.hiber.model.User AS u WHERE u.login= :login");
@@ -192,6 +231,11 @@ public enum HiberDB {
         });
     }
 
+    /**
+     * get full list of advertisement from DB
+     *
+     * @return full list of advertisement
+     */
     public List<Advertisement> getAllList() {
         return baseQuaery(session -> {
             Query query = session.createQuery("FROM ru.hiber.model.Advertisement");
@@ -199,30 +243,67 @@ public enum HiberDB {
         });
     }
 
+    /**
+     * update advertisement by id
+     *
+     * @param adv fullfilled advertisement
+     */
     public void updateAdv(Advertisement adv) {
         baseAction(session -> session.update(adv));
     }
 
+    /**
+     * add new Car to DB
+     *
+     * @param car car without Id
+     */
     public void addNewCar(Car car) {
         baseAction(session -> session.persist(car));
     }
 
+    /**
+     * update Car by id
+     *
+     * @param car fullfilled Car
+     */
     public void updateCar(Car car) {
         baseAction(session -> session.update(car));
     }
 
+    /**
+     * add new Engine to DB
+     *
+     * @param eng Engine without Id
+     */
     public void addNewEng(Engine eng) {
         baseAction(session -> session.persist(eng));
     }
 
+    /**
+     * update Engine by id
+     *
+     * @param eng fullfilled Engine
+     */
     public void updateEng(Engine eng) {
         baseAction(session -> session.update(eng));
     }
 
+    /**
+     * get fullfilled advertisement by id
+     *
+     * @param adv advertisement with id
+     * @return fullfilled advertisement
+     */
     public Advertisement getAdd(Advertisement adv) {
         return baseQuaery(session -> session.get(Advertisement.class, adv.getId()));
     }
 
+    /**
+     * get fullfilled Car by id
+     *
+     * @param car Car with id
+     * @return fullfilled Car
+     */
     public Car getCar(Car car) {
         return baseQuaery(session -> session.get(Car.class, car.getVin()));
     }
@@ -235,19 +316,63 @@ public enum HiberDB {
         });
     }
 
+    /**
+     * load fitred list of advertisement
+     *
+     * @param keys keys for creating request
+     * @return filtred list of advertisement
+     */
     public List<Advertisement> getfilteredAdd(HashMap<String, String> keys) {
         StringBuilder builder = new StringBuilder("from Advertisement as adv where ");
         keys.keySet().forEach(e -> {
             builder.append("adv.").append(e);
-            if (e.equalsIgnoreCase("created")) {
-                builder.append(" > ");
-            } else {
-                builder.append(" = ");
-            }
             builder.append(keys.get(e)).append(" and ");
         });
         String requestLine = builder.toString().substring(0, builder.toString().length() - 4);
-        return (List<Advertisement>) baseQuaery(session -> session.createQuery(requestLine).list());
+        List<Advertisement> answer = (List<Advertisement>) baseQuaery(session -> session.createQuery(requestLine).list());
+        return answer;
     }
 
+    /**
+     * get image from DB
+     *
+     * @param adv advertisement
+     * @return byte[] with image
+     */
+    public byte[] getImage(Advertisement adv) {
+        return baseQuaery(session -> {
+            Advertisement temp = session.get(Advertisement.class, adv.getId());
+            return temp.getPhoto();
+        });
+    }
+
+    /**
+     * insert full add in one transaction
+     *
+     * @param adv  advertisement
+     * @param car  car for advertisement
+     * @param eng  engine for car
+     * @param user advertisement owber
+     */
+    public void inserFullAdv(Advertisement adv, Car car, Engine eng, User user) {
+        Transaction tran = null;
+        try (Session session = HIBER_DB.getFactory().openSession()) {
+            tran = session.getTransaction();
+            tran.begin();
+            user = session.get(User.class, user.getId());
+            car.addEngine(eng);
+            car.addAdvert(adv);
+            user.addAdv(adv);
+            session.persist(adv);
+            session.persist(car);
+            session.persist(eng);
+            session.update(user);
+            tran.commit();
+        } catch (Exception e) {
+            if (tran != null) {
+                tran.rollback();
+            }
+            LOG.error(LOAD_ERRORS, e);
+        }
+    }
 }

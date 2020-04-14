@@ -8,9 +8,11 @@ $(document).ready(function () {
     }).done(function (data) {
         var company = $('#company');
         company.empty();
+        company.append(" <option></option>");
         $(data).each(function (index, el) {
             company.append(" <option> " + el.name + " </option>");
-        })
+        });
+        company.val("");
     })
 });
 
@@ -24,9 +26,11 @@ function models() {
     }).done(function (data) {
         var models = $('#model');
         models.empty();
+        models.append(" <option></option>");
         $(data).each(function (index, el) {
             models.append(" <option> " + el + " </option>");
-        })
+        });
+        models.val("");
     })
 }
 

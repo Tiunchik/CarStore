@@ -21,7 +21,7 @@ $(document).ready(function () {
                 "<input type=\"hidden\" value=\"" + el.id + "\" id=\"addnumber\"" +
                 "            <div class=\"row\">\n" +
                 "                <div class=\"col-sm-3\">\n" +
-                "                    <img src=\"http://localhost:8090/myauto/images?path=" + el.photo + "\" class=\"img-rounded\" alt=\"None image\"\n" +
+                "                    <img src=\"http://localhost:8090/myauto/images?path=" + el.id + "\" class=\"img-rounded\" alt=\"None image\"\n" +
                 "                         width=\"200px\" height=\"200px\">\n" +
                 "                </div>\n" +
                 "                <div class=\"col-sm-9\">\n" +
@@ -54,7 +54,7 @@ $(document).ready(function () {
                 "                            <div class=\"col-sm-2\"><strong>Price</strong></div>\n" +
                 "                            <div class=\"col-sm-2\">" + el.price + "</div>\n" +
                 "                            <div class=\"col-sm-2\"><strong>Status</strong></div>\n" +
-                "                            <div class=\"col-sm-2\">" + el.status + "</div>\n" +
+                "                            <div class=\"col-sm-2\">" + getStatus(el.status) + "</div>\n" +
                 "                        </dl>\n" +
                 "                    </div>\n" +
                 "                </div>\n" +
@@ -71,11 +71,19 @@ $(document).ready(function () {
     })
 });
 
-function toMainlist() {
-    location.href = getContextPath() +"/main"
+function getStatus(boolean) {
+    if (boolean) {
+        return "Unsold";
+    } else {
+        return "Sold";
+    }
 }
 
-function under(){
+function toMainlist() {
+    location.href = getContextPath() + "/main"
+}
+
+function under() {
     alert("This function is under construction");
 }
 

@@ -10,6 +10,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.awt.*;
+import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +44,8 @@ public class Advertisement {
 
     private int price;
 
-    private String photo;
+    @Lob
+    private byte[] photo;
 
     private String color;
 
@@ -104,11 +106,11 @@ public class Advertisement {
         this.price = price;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
