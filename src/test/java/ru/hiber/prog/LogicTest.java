@@ -58,6 +58,8 @@ public class LogicTest {
         assertTrue(adv.getId() != 0);
         assertEquals(car.getEngine(), eng);
         assertTrue(eng.getId() != 0);
+        assertTrue(eng.getCars().contains(car));
+        assertFalse(user.getAdvert().isEmpty());
     }
 
     @Test

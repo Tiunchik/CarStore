@@ -31,13 +31,13 @@ public class Advertisement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User creator;
 
     @CreationTimestamp
     private Timestamp created;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Car car;
 
     @Type(type = "boolean")
@@ -57,6 +57,11 @@ public class Advertisement {
 
     @OneToMany(mappedBy = "advert", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Comment> coments = new HashSet<>();
+
+    public void addCar(Car car) {
+        this.setCar(car);
+        car.getAdvert().add(this);
+    }
 
 
     public long getId() {

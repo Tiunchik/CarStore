@@ -15,9 +15,9 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/hiber</property>
-        <property name="connection.username">postgres</property>
-        <property name="connection.password">password</property>
+        <property name="connection.url">jdbc:postgresql://ec2-184-72-236-57.compute-1.amazonaws.com:5432/d8v32tj15kva58</property>
+        <property name="connection.username">zzbhjbbdhvxpak</property>
+        <property name="connection.password">de36d96126266df0ee00a98e7329a5a400e6a424235f9ac12677895b1e5cb003</property>
 
         <!-- c3p0 connection settings -->
         <property name="hibernate.c3p0.acquire_increment">1</property>

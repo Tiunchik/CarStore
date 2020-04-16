@@ -61,7 +61,7 @@ public enum HiberDB {
      */
     private static SessionFactory createFactory() {
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-                .configure("hibernate.cfg.xml") // or herokuhibernate.cfg.xml
+                .configure("hibernate.cfg.xml") // or nonherokuhibernate.cfg.xml
                 .build();
 
         Metadata metadata = new MetadataSources(standardRegistry)
@@ -377,14 +377,10 @@ public enum HiberDB {
         try {
             tran = session.getTransaction();
             tran.begin();
-            user = session.get(User.class, user.getId());
+            session.refresh(user);
             car.addEngine(eng);
-            car.addAdvert(adv);
-            session.persist(adv);
-            session.saveOrUpdate(car);
-            session.saveOrUpdate(eng);
+            adv.addCar(car);
             user.addAdv(adv);
-            session.saveOrUpdate(user);
             tran.commit();
             session.close();
         } catch (Exception e) {

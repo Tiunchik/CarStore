@@ -33,7 +33,7 @@ public class Car {
 
     private Timestamp made;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Engine engine;
 
     private String transmition;
@@ -46,11 +46,6 @@ public class Car {
     public void addEngine(Engine engine) {
         engine.getCars().add(this);
         this.setEngine(engine);
-    }
-
-    public void addAdvert(Advertisement adv) {
-        adv.setCar(this);
-        this.getAdvert().add(adv);
     }
 
     public String getVin() {
