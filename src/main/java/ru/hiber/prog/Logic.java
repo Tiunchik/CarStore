@@ -235,4 +235,8 @@ public class Logic {
     public byte[] getImage(Advertisement adv) {
         return DB.getImage(adv);
     }
+
+    public void addCompany(Company comp) {
+        DB.addCompany(comp);
+    }
 }

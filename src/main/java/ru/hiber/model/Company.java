@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -55,5 +56,23 @@ public class Company {
 
     public void setModels(Set<String> models) {
         this.models = models;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Company company = (Company) o;
+        return id == company.id
+                && Objects.equals(name, company.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

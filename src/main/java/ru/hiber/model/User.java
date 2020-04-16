@@ -7,6 +7,7 @@ package ru.hiber.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -118,5 +119,27 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id == user.id
+                && login.equals(user.login)
+                && password.equals(user.password)
+                && email.equals(user.email)
+                && firstName.equals(user.firstName)
+                && secondName.equals(user.secondName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, email, firstName, secondName);
     }
 }

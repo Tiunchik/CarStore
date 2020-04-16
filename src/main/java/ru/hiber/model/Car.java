@@ -8,6 +8,7 @@ package ru.hiber.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -125,5 +126,23 @@ public class Car {
         this.engine = engine;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Car car = (Car) o;
+        return vin.equals(car.vin)
+                && company.equals(car.company)
+                && model.equals(car.model)
+                && body.equals(car.body);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(vin, company, model, body, made);
+    }
 }

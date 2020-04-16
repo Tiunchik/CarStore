@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -33,7 +34,7 @@ public class Engine {
 
     private String model;
 
-    @OneToMany(mappedBy = "engine", cascade = CascadeType.ALL, orphanRemoval = true,  fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "engine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Car> cars = new HashSet<>();
 
     public long getId() {
@@ -74,5 +75,25 @@ public class Engine {
 
     public void setCars(Set<Car> cars) {
         this.cars = cars;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Engine engine = (Engine) o;
+        return id == engine.id
+                && hoursepowers == engine.hoursepowers
+                && type.equals(engine.type)
+                && model.equals(engine.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, hoursepowers, type, model);
     }
 }

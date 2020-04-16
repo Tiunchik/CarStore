@@ -61,7 +61,7 @@ public enum HiberDB {
      */
     private static SessionFactory createFactory() {
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-                .configure("herokuhibernate.cfg.xml") // or herokuhibernate.cfg.xml
+                .configure("hibernate.cfg.xml") // or herokuhibernate.cfg.xml
                 .build();
 
         Metadata metadata = new MetadataSources(standardRegistry)
@@ -104,16 +104,19 @@ public enum HiberDB {
      */
     public void baseAction(Consumer<Session> action) {
         Transaction tran = null;
-        try (Session session = HIBER_DB.getFactory().openSession()) {
+        Session session = HIBER_DB.getFactory().openSession();
+        try {
             tran = session.getTransaction();
             tran.begin();
             action.accept(session);
             tran.commit();
+            session.close();
         } catch (Exception e) {
             if (tran != null) {
                 tran.rollback();
             }
             LOG.error(LOAD_ERRORS, e);
+            session.close();
         }
     }
 
@@ -124,10 +127,13 @@ public enum HiberDB {
      */
     public <E> E baseQuaery(Function<Session, E> action) {
         E answer = null;
-        try (Session session = HIBER_DB.getFactory().openSession()) {
+        Session session = HIBER_DB.getFactory().openSession();
+        try {
             answer = action.apply(session);
+            session.close();
         } catch (NoResultException e) {
             LOG.info(NO_ENTITY_FOUND_FOR_QUERY);
+            session.close();
         }
         return answer;
     }
@@ -219,10 +225,21 @@ public enum HiberDB {
         });
     }
 
+    /**
+     * added new add to DB
+     *
+     * @param adv new add
+     */
     public void addNewAd(Advertisement adv) {
         baseAction(session -> session.persist(adv));
     }
 
+    /**
+     * get all ads that is belonged to user
+     *
+     * @param user creator of ads
+     * @return list of them ads
+     */
     public List<Advertisement> getAdList(User user) {
         return baseQuaery(session -> {
             Query query = session.createQuery("FROM ru.hiber.model.Advertisement AS a WHERE a.creator.id= :id");
@@ -356,23 +373,47 @@ public enum HiberDB {
      */
     public void inserFullAdv(Advertisement adv, Car car, Engine eng, User user) {
         Transaction tran = null;
-        try (Session session = HIBER_DB.getFactory().openSession()) {
+        Session session = HIBER_DB.getFactory().openSession();
+        try {
             tran = session.getTransaction();
             tran.begin();
             user = session.get(User.class, user.getId());
             car.addEngine(eng);
             car.addAdvert(adv);
-            user.addAdv(adv);
             session.persist(adv);
-            session.persist(car);
-            session.persist(eng);
-            session.update(user);
+            session.saveOrUpdate(car);
+            session.saveOrUpdate(eng);
+            user.addAdv(adv);
+            session.saveOrUpdate(user);
             tran.commit();
+            session.close();
         } catch (Exception e) {
             if (tran != null) {
                 tran.rollback();
             }
             LOG.error(LOAD_ERRORS, e);
+            session.close();
         }
+    }
+
+    public void deleteAll() {
+        baseAction(session -> {
+            session.createQuery("delete from User ").executeUpdate();
+        });
+        baseAction(session -> {
+            session.createQuery("delete from Advertisement ").executeUpdate();
+        });
+        baseAction(session -> {
+            session.createQuery("delete from Engine ").executeUpdate();
+        });
+        baseAction(session -> {
+            session.createQuery("delete from Car ").executeUpdate();
+        });
+        baseAction(session -> {
+            session.createQuery("delete from Company ").executeUpdate();
+        });
+
+        baseAction(Session::clear);
+        baseAction(Session::flush);
     }
 }

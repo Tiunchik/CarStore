@@ -12,6 +12,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * Class Comments - data model for comments, at this mom
@@ -67,5 +68,25 @@ public class Comment {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Comment comment = (Comment) o;
+        return id == comment.id
+                && text.equals(comment.text)
+                && date.equals(comment.date)
+                && advert.equals(comment.advert);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, text, date, advert);
     }
 }
