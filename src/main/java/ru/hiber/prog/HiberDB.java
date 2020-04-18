@@ -61,7 +61,7 @@ public enum HiberDB {
      */
     private static SessionFactory createFactory() {
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-                .configure("hibernate.cfg.xml") // or nonherokuhibernate.cfg.xml
+                .configure("nonherokuhibernate.cfg.xml") // or nonherokuhibernate.cfg.xml
                 .build();
 
         Metadata metadata = new MetadataSources(standardRegistry)
@@ -377,7 +377,7 @@ public enum HiberDB {
         try {
             tran = session.getTransaction();
             tran.begin();
-            session.refresh(user);
+            user = session.get(User.class, user.getId());
             car.addEngine(eng);
             adv.addCar(car);
             user.addAdv(adv);
@@ -394,19 +394,19 @@ public enum HiberDB {
 
     public void deleteAll() {
         baseAction(session -> {
-            session.createQuery("delete from User ").executeUpdate();
+            session.createQuery("delete from ru.hiber.model.User ").executeUpdate();
         });
         baseAction(session -> {
-            session.createQuery("delete from Advertisement ").executeUpdate();
+            session.createQuery("delete from ru.hiber.model.Advertisement ").executeUpdate();
         });
         baseAction(session -> {
-            session.createQuery("delete from Engine ").executeUpdate();
+            session.createQuery("delete from ru.hiber.model.Engine ").executeUpdate();
         });
         baseAction(session -> {
-            session.createQuery("delete from Car ").executeUpdate();
+            session.createQuery("delete from ru.hiber.model.Car ").executeUpdate();
         });
         baseAction(session -> {
-            session.createQuery("delete from Company ").executeUpdate();
+            session.createQuery("delete from ru.hiber.model.Company ").executeUpdate();
         });
 
         baseAction(Session::clear);
