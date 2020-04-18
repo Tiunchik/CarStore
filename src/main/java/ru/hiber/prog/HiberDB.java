@@ -61,7 +61,7 @@ public enum HiberDB {
      */
     private static SessionFactory createFactory() {
         StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-                .configure("nonherokuhibernate.cfg.xml") // or nonherokuhibernate.cfg.xml
+                .configure("hibernate.cfg.xml") // or nonherokuhibernate.cfg.xml
                 .build();
 
         Metadata metadata = new MetadataSources(standardRegistry)
