@@ -200,17 +200,21 @@ public class Logic {
                 }
             }
             if (e.equalsIgnoreCase("created")) {
+                Timestamp timestamp;
                 if (keys.get(e).equalsIgnoreCase("Added from yesterday")) {
                     Instant now = Instant.now();
                     now = now.minus(1, ChronoUnit.DAYS);
-                    Timestamp yerstaday = Timestamp.from(now);
-                    keys.put("created", ">" + yerstaday.toString());
+                    timestamp = Timestamp.from(now);
                 } else {
                     Instant now = Instant.now();
                     now = now.minus(3, ChronoUnit.DAYS);
-                    Timestamp timestamp = Timestamp.from(now);
-                    keys.put("created", ">" + timestamp.toString());
+                    timestamp = Timestamp.from(now);
                 }
+                StringBuilder builder = new StringBuilder(" > ")
+                        .append("'")
+                        .append(timestamp.toString())
+                        .append("'");
+                keys.put("created", builder.toString());
             }
             if (e.equalsIgnoreCase("status")) {
                 if (keys.get(e).equalsIgnoreCase("Sold")) {
