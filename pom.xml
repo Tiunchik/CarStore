@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.job4j</groupId>
-    <artifactId>job4j_todo</artifactId>
+    <artifactId>job4j_carprice</artifactId>
     <version>1.0</version>
 
     <packaging>war</packaging>
