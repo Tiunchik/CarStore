@@ -1,2 +1,2 @@
-# job4j_todo - The learning task to work with hibernate library.
-[![Build Status](https://travis-ci.org/Tiunchik/job4j_todo.svg?branch=master)](https://travis-ci.org/Tiunchik/job4j_todo)
+# job4j_carprice - developing the application for learning with hibernate and servlets. The application represents a simple copy of auto.ru site.
+[![Build Status](https://travis-ci.org/Tiunchik/job4j_carprice.svg?branch=autoADbranch)](https://travis-ci.org/Tiunchik/job4j_carprice)
