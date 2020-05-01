@@ -43,14 +43,14 @@ public class Advertisement {
     @Type(type = "boolean")
     private boolean status;
 
-    private int price;
+    private long price;
 
     @Lob
     private byte[] photo;
 
     private String color;
 
-    private int odomenter;
+    private long odomenter;
 
     @Type(type = "text")
     private String userComment;
@@ -104,7 +104,7 @@ public class Advertisement {
         this.status = status;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -128,7 +128,7 @@ public class Advertisement {
         this.color = color;
     }
 
-    public int getOdomenter() {
+    public long getOdomenter() {
         return odomenter;
     }
 
@@ -150,6 +150,14 @@ public class Advertisement {
 
     public void setComents(Set<Comment> coments) {
         this.coments = coments;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public void setOdomenter(long odomenter) {
+        this.odomenter = odomenter;
     }
 
     @Override

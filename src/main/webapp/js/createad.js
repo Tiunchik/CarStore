@@ -69,8 +69,10 @@ function createAd() {
             "comment": comment,
             "body": body
         })
-    }).done(function () {
+    }).done(function (data) {
         location.href = getContextPath() + "/userpage";
+    }).fail(function (data) {
+        alert("There are mistakes in your add. Please refill info");
     })
 }
 

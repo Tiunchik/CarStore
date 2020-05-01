@@ -231,6 +231,7 @@ public class PostServlet extends HttpServlet {
                 resp.setStatus(200);
             }
         } catch (ParseException e) {
+            resp.setStatus(500);
             LOG.error(ERROR, e);
         }
     }
@@ -268,8 +269,8 @@ public class PostServlet extends HttpServlet {
 
     private Advertisement createAdv(JSONObject jsonData) {
         Advertisement adv = new Advertisement();
-        adv.setOdomenter(Integer.parseInt((String) jsonData.get("odometer")));
-        adv.setPrice(Integer.parseInt((String) jsonData.get("price")));
+        adv.setOdomenter(Long.parseLong((String) jsonData.get("odometer")));
+        adv.setPrice(Long.parseLong((String) jsonData.get("price")));
         adv.setUserComment((String) jsonData.get("comment"));
         adv.setStatus(true);
         return adv;
