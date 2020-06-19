@@ -1,4 +1,4 @@
-## Job4j_carprice education project
+## CarStore project
 
 [![Build Status](https://travis-ci.org/Tiunchik/job4j_carprice.svg?branch=autoADbranch)](https://travis-ci.org/Tiunchik/job4j_carprice)
 
